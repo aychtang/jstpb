@@ -7,8 +7,8 @@ var search = function(query, cb) {
 		if (!err) {
 			$ = cheerio.load(body);
 			var result = [];
-			$('#searchResult .detName').each(function() {
-				result.push(this.html());
+			$('#searchResult .detName > a').each(function() {
+				result.push(this.attr('href'));
 			});
 			cb(result);
 		}
@@ -20,5 +20,5 @@ var formatTitle = function(title) {
 };
 
 search(formatTitle('The Last Samurai'), function(result) {
-	console.log(result[0]);
+	console.log(result);
 });
