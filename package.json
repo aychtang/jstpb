@@ -1,0 +1,9 @@
+{
+	"name": "jstpb",
+	"description": "",
+	"version": "0.0.0",
+	"dependencies" : {
+		"cheerio": "~0.13.0",
+		"request": "~2.30.0"
+	}
+}

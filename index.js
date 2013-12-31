@@ -1,6 +1,7 @@
 var cheerio = require('cheerio');
 var request = require('request');
-var base_url = 'http://proxybay.eu';
+var input = process.argv;
+var base_url = input[3] || 'http://proxybay.eu';
 
 var search = function(query, cb) {
 	request(base_url + '/search/' + query, function(err, response, body) {
@@ -19,6 +20,6 @@ var formatTitle = function(title) {
 	return title.toLowerCase().split(' ').join('_');
 };
 
-search(formatTitle('The Last Samurai'), function(result) {
+search(formatTitle(input[2]), function(result) {
 	console.log(result);
 });
