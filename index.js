@@ -15,6 +15,10 @@ var search = function(query, cb) {
 	});
 };
 
-search('the_walking_dead', function(result) {
-	console.log(result);
+var formatTitle = function(title) {
+	title = title.toLowerCase().split(' ').join('_');
+};
+
+search('The_Last_Samurai', function(result) {
+	console.log(result[0]);
 });
