@@ -16,9 +16,9 @@ var search = function(query, cb) {
 };
 
 var formatTitle = function(title) {
-	title = title.toLowerCase().split(' ').join('_');
+	return title.toLowerCase().split(' ').join('_');
 };
 
-search('The_Last_Samurai', function(result) {
+search(formatTitle('The Last Samurai'), function(result) {
 	console.log(result[0]);
 });
