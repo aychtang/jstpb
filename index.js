@@ -1,9 +1,8 @@
 var cheerio = require('cheerio');
 var request = require('request');
-var input = process.argv;
 
 var tpb = function(baseUrl) {
-	this.baseUrl = baseUrl;
+	this.baseUrl = baseUrl || 'http://proxybay.eu';
 };
 
 tpb.prototype.search = function(query, cb) {
@@ -15,17 +14,14 @@ tpb.prototype.search = function(query, cb) {
 			$('#searchResult .detName > a').each(function() {
 				result.push(baseUrl + this.attr('href'));
 			});
-			cb(result);
+			typeof cb === 'function' && cb(result);
 		}
 	});
 };
 
 tpb.prototype.formatTitle = function(title) {
+	if (!title) return null;
 	return title.toLowerCase().split(' ').join('_');
 };
 
-var t = new tpb(input[3] || 'http://proxybay.eu');
-
-t.search(t.formatTitle(input[2]), function(result) {
-	console.log(result);
-});
+module.exports = tpb;
