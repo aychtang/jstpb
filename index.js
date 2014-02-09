@@ -12,8 +12,16 @@ tpb.prototype.search = function(query, cb) {
 			var $ = cheerio.load(body);
 			var result = [];
 			$('#searchResult > tr').each(function() {
+				var swarmCount = [];
+				$('td', this).each(function() {
+					if (this.attr('align')) {
+						swarmCount.push(this.html());
+					}
+				});
 				result.push({
-					url: baseUrl + this.find('.detLink').attr('href')
+					url: baseUrl + $('.detLink', this).attr('href'),
+					'seeds': +swarmCount[0],
+					'leechers': +swarmCount[1]
 				});
 			});
 			typeof cb === 'function' && cb(result);
