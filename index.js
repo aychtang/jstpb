@@ -11,8 +11,10 @@ tpb.prototype.search = function(query, cb) {
 		if (!err) {
 			var $ = cheerio.load(body);
 			var result = [];
-			$('#searchResult .detName > a').each(function() {
-				result.push(baseUrl + this.attr('href'));
+			$('#searchResult > tr').each(function() {
+				result.push({
+					url: baseUrl + this.find('.detLink').attr('href')
+				});
 			});
 			typeof cb === 'function' && cb(result);
 		}
