@@ -11,20 +11,26 @@ tpb.prototype.search = function(query, cb) {
 		if (!err) {
 			var $ = cheerio.load(body);
 			var result = [];
+
 			$('#searchResult > tr').each(function() {
 				var swarmCount = [];
-				$('td', this).each(function() {
-					if (this.attr('align')) {
-						swarmCount.push(this.html());
-					}
+
+				$('td', this).filter(function() {
+					return $(this).attr('align') === 'right';
+				}).each(function() {
+					swarmCount.push(this.html());
 				});
+
 				result.push({
-					url: baseUrl + $('.detLink', this).attr('href'),
+					'url': baseUrl + $('.detLink', this).attr('href'),
 					'seeds': +swarmCount[0],
 					'leechers': +swarmCount[1]
 				});
 			});
-			typeof cb === 'function' && cb(result);
+
+			if (typeof cb === 'function') {
+				cb(result);
+			}
 		}
 	});
 };
